@@ -38,6 +38,21 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'Server is running' });
 });
 
+// Email config debug (remove after testing)
+app.get('/api/debug-email', async (req, res) => {
+  const nodemailer = (await import('nodemailer')).default;
+  const t = nodemailer.createTransport({
+    host: 'smtp.gmail.com', port: 465, secure: true,
+    auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
+  });
+  try {
+    await t.verify();
+    res.json({ ok: true, user: process.env.EMAIL_USER, passLen: process.env.EMAIL_PASS?.length });
+  } catch(e) {
+    res.json({ ok: false, error: e.message, user: process.env.EMAIL_USER, passLen: process.env.EMAIL_PASS?.length });
+  }
+});
+
 // 404 handler
 app.use((req, res) => {
   res.status(404).json({ error: 'Route not found' });
