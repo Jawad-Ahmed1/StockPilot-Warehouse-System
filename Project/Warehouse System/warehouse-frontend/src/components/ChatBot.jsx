@@ -11,7 +11,7 @@ const ROLE_LABELS = {
   supervisor: 'Supervisor View', staff: 'Stock View Only'
 }
 
-const BASE = 'http://localhost:5000/api'
+const BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 export default function ChatBot({ user }) {
   const [open, setOpen]               = useState(false)

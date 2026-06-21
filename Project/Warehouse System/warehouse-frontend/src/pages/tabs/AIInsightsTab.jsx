@@ -3,7 +3,7 @@ import { AlertTriangle, TrendingUp, Zap, RefreshCw } from 'lucide-react'
 import { api } from '../../services/api'
 import './TabShared.css'
 
-const BASE = 'http://localhost:5000/api'
+const BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
 
 const fetchRaw = async (path) => {
   const token = localStorage.getItem('authToken')
