@@ -78,28 +78,29 @@ export const signup = async (req, res) => {
       [name, email.toLowerCase(), phone || null, address || null, hashedPassword, userRole, otp, expires]
     );
 
-    // Send verification email
-    await sendEmail({
+    // Respond immediately — don't block on email
+    res.status(201).json({
+      success: true,
+      message: 'Account created! Check your email for the verification code.',
+      email: email.toLowerCase(),
+    });
+
+    // Send email in background (non-blocking)
+    sendEmail({
       to: email,
-      subject: 'Verify your Warehouse account',
+      subject: 'Verify your Stock Pilot account',
       html: `
         <div style="font-family:Arial,sans-serif;max-width:500px;margin:auto;padding:24px;border:1px solid #e0e0e0;border-radius:8px">
           <h2 style="color:#667eea">Stock Pilot</h2>
           <p>Hi <strong>${name}</strong>,</p>
           <p>Thanks for signing up! Use the code below to verify your email address:</p>
           <div style="text-align:center;margin:32px 0">
-            <span style="font-size:36px;font-weight:bold;letter-spacing:8px;color:#1976d2">${otp}</span>
+            <span style="font-size:36px;font-weight:bold;letter-spacing:8px;color:#667eea">${otp}</span>
           </div>
           <p style="color:#888;font-size:13px">This code expires in <strong>15 minutes</strong>. If you didn't create an account, ignore this email.</p>
         </div>
       `,
-    });
-
-    res.status(201).json({
-      success: true,
-      message: 'Account created! Check your email for the verification code.',
-      email: email.toLowerCase(),
-    });
+    }).catch(err => console.error('Email send failed (non-blocking):', err.message));
   } catch (error) {
     console.error('Signup error:', error);
     res.status(500).json({ message: 'Failed to create account' });
@@ -190,23 +191,25 @@ export const resendVerificationCode = async (req, res) => {
       [otp, expires, user.id]
     );
 
-    await sendEmail({
+    // Respond immediately
+    res.json({ success: true, message: 'New verification code sent to your email' });
+
+    // Send email in background
+    sendEmail({
       to: email,
-      subject: 'New verification code – Warehouse',
+      subject: 'New verification code – Stock Pilot',
       html: `
         <div style="font-family:Arial,sans-serif;max-width:500px;margin:auto;padding:24px;border:1px solid #e0e0e0;border-radius:8px">
           <h2 style="color:#667eea">Stock Pilot</h2>
           <p>Hi <strong>${user.name}</strong>,</p>
           <p>Here is your new verification code:</p>
           <div style="text-align:center;margin:32px 0">
-            <span style="font-size:36px;font-weight:bold;letter-spacing:8px;color:#1976d2">${otp}</span>
+            <span style="font-size:36px;font-weight:bold;letter-spacing:8px;color:#667eea">${otp}</span>
           </div>
           <p style="color:#888;font-size:13px">This code expires in <strong>15 minutes</strong>.</p>
         </div>
       `,
-    });
-
-    res.json({ success: true, message: 'New verification code sent to your email' });
+    }).catch(err => console.error('Resend email failed:', err.message));
   } catch (error) {
     console.error('Resend code error:', error);
     res.status(500).json({ message: 'Failed to resend verification code' });
@@ -306,9 +309,13 @@ export const requestPasswordReset = async (req, res) => {
       [otp, expires, user.id]
     );
 
-    await sendEmail({
+    // Respond immediately
+    res.json({ success: true, message: 'If that email exists, a reset code has been sent' });
+
+    // Send email in background
+    sendEmail({
       to: email,
-      subject: 'Password reset code – Warehouse',
+      subject: 'Password reset code – Stock Pilot',
       html: `
         <div style="font-family:Arial,sans-serif;max-width:500px;margin:auto;padding:24px;border:1px solid #e0e0e0;border-radius:8px">
           <h2 style="color:#667eea">Stock Pilot</h2>
@@ -320,9 +327,7 @@ export const requestPasswordReset = async (req, res) => {
           <p style="color:#888;font-size:13px">This code expires in <strong>15 minutes</strong>. If you didn't request a password reset, ignore this email.</p>
         </div>
       `,
-    });
-
-    res.json({ success: true, message: 'If that email exists, a reset code has been sent' });
+    }).catch(err => console.error('Reset email failed:', err.message));
   } catch (error) {
     console.error('Password reset request error:', error);
     res.status(500).json({ message: 'Failed to send reset code' });
