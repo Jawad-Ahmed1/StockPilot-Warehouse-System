@@ -1,28 +1,28 @@
 import pool from '../config/database.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import nodemailer from 'nodemailer';
 
-// ─── Email Transporter ────────────────────────────────────────────────────────
-// Uses port 465 (SSL) which works on Railway (port 587 is blocked)
-
-const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 465,
-  secure: true, // SSL on port 465
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+// ─── Email via Brevo HTTP API (works on Railway) ──────────────────────────────
 
 const sendEmail = async ({ to, subject, html }) => {
-  await transporter.sendMail({
-    from: process.env.EMAIL_FROM,
-    to,
-    subject,
-    html,
+  const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+    method: 'POST',
+    headers: {
+      'Accept':       'application/json',
+      'Content-Type': 'application/json',
+      'api-key':      process.env.BREVO_API_KEY,
+    },
+    body: JSON.stringify({
+      sender:   { name: 'Stock Pilot', email: process.env.EMAIL_USER },
+      to:       [{ email: to }],
+      subject,
+      htmlContent: html,
+    }),
   });
+  if (!response.ok) {
+    const err = await response.json();
+    throw new Error(err.message || 'Email send failed');
+  }
 };
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
