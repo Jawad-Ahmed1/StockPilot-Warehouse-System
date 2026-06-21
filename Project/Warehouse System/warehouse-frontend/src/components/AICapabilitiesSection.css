@@ -1,0 +1,46 @@
+.ai-section {
+  padding: 100px 20px;
+  background: white;
+}
+.ai-section .container { max-width: 1200px; margin: 0 auto; }
+
+.ai-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.ai-card {
+  display: flex; gap: 1.25rem;
+  background: #fafbff; border: 1px solid #eef0f8;
+  border-radius: 14px; padding: 1.75rem;
+  transition: all 0.25s ease;
+}
+.ai-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 36px rgba(102,126,234,0.1);
+  border-color: #d0d8ff;
+}
+
+.ai-card-icon {
+  width: 56px; height: 56px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+.ai-card-body h3 {
+  font-size: 1rem; font-weight: 700; color: #1a1f36; margin-bottom: 0.5rem;
+}
+.ai-card-body p {
+  font-size: 0.85rem; color: #666; line-height: 1.6; margin-bottom: 0.85rem;
+}
+.ai-card-body ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.ai-card-body li { font-size: 0.82rem; color: #555; display: flex; gap: 6px; align-items: flex-start; }
+.check { font-weight: 800; font-size: 0.9rem; flex-shrink: 0; }
+
+@media (max-width: 768px) {
+  .ai-section { padding: 60px 20px; }
+  .ai-grid { grid-template-columns: 1fr; }
+  .ai-card { flex-direction: column; }
+}

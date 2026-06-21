@@ -1,0 +1,66 @@
+.cta-section {
+  padding: 100px 20px;
+  background: linear-gradient(135deg, #1a1f36 0%, #2c3e50 100%);
+  color: white; text-align: center; position: relative; overflow: hidden;
+}
+.cta-bg-glow {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  width: 600px; height: 600px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(102,126,234,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+.cta-section .container { max-width: 800px; margin: 0 auto; position: relative; z-index: 1; }
+
+.cta-icon-wrap {
+  width: 80px; height: 80px; border-radius: 20px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 1.5rem;
+  box-shadow: 0 12px 30px rgba(102,126,234,0.4);
+}
+
+.cta-content h2 {
+  font-size: 2.4rem; font-weight: 800; margin-bottom: 1rem;
+  letter-spacing: -0.3px; line-height: 1.2;
+}
+.cta-content p {
+  font-size: 1.05rem; color: rgba(255,255,255,0.7);
+  line-height: 1.7; margin-bottom: 2.5rem; max-width: 580px; margin-left: auto; margin-right: auto;
+}
+
+/* Steps */
+.cta-steps {
+  display: flex; align-items: center; justify-content: center;
+  gap: 1rem; flex-wrap: wrap; margin-bottom: 3rem;
+}
+.cta-step {
+  display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+  max-width: 150px; text-align: center;
+}
+.step-num {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 1.1rem;
+  box-shadow: 0 4px 12px rgba(102,126,234,0.4);
+}
+.cta-step span { font-size: 0.83rem; color: rgba(255,255,255,0.7); line-height: 1.4; }
+.cta-arrow { color: rgba(255,255,255,0.3); font-size: 1.5rem; }
+
+/* Info notes */
+.cta-actions {
+  display: flex; flex-direction: column; gap: 0.75rem;
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px; padding: 1.5rem; text-align: left;
+}
+.cta-action-note {
+  display: flex; align-items: flex-start; gap: 0.75rem;
+  font-size: 0.88rem; color: rgba(255,255,255,0.75); line-height: 1.5;
+}
+.cta-action-note svg { flex-shrink: 0; color: #a5b4fc; margin-top: 2px; }
+
+@media (max-width: 640px) {
+  .cta-content h2 { font-size: 1.8rem; }
+  .cta-steps { flex-direction: column; }
+  .cta-arrow { transform: rotate(90deg); }
+}
