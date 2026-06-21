@@ -47,7 +47,7 @@
 .sidebar-toggle {
   background: none;
   border: none;
-  color: rgba(255,255,255,0.6);
+  color: rgba(255,255,255,0.85);
   cursor: pointer;
   padding: 4px;
   border-radius: 4px;
@@ -55,7 +55,7 @@
   align-items: center;
   flex-shrink: 0;
 }
-.sidebar-toggle:hover { color: white; background: rgba(255,255,255,0.1); }
+.sidebar-toggle:hover { color: white; background: rgba(255,255,255,0.15); }
 
 .sidebar-user {
   display: flex;
@@ -86,8 +86,9 @@
 }
 
 .user-name {
-  font-weight: 600;
-  font-size: 0.9rem;
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: white;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -118,7 +119,7 @@
   padding: 0.85rem 1rem;
   background: none;
   border: none;
-  color: rgba(255,255,255,0.65);
+  color: rgba(255,255,255,0.85);
   cursor: pointer;
   font-size: 0.9rem;
   font-weight: 500;
