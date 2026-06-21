@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A modern task manager application to organize and track your daily tasks">
+    <title>Task Manager - Stay Organized</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="skip-link">
+        <a href="#main-content">Skip to main content</a>
+    </div>
+
+    <header role="banner" class="header">
+        <div class="header-content">
+            <div class="header-top">
+                <div>
+                    <h1>Task Manager</h1>
+                    <p class="subtitle">Stay organized and productive</p>
+                </div>
+                <button
+                    id="theme-toggle"
+                    class="theme-toggle"
+                    type="button"
+                    aria-label="Toggle dark mode"
+                    title="Toggle dark mode"
+                >
+                    <span class="theme-icon" aria-hidden="true">🌙</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" class="main-container">
+        <section class="task-section">
+            <form id="task-form" class="task-form" novalidate>
+                <legend class="sr-only">Add a new task</legend>
+                
+                <div class="form-group">
+                    <label for="task-input" class="form-label">Add a new task:</label>
+                    <div class="input-wrapper">
+                        <input
+                            type="text"
+                            id="task-input"
+                            class="task-input"
+                            placeholder="What needs to be done?"
+                            required
+                            aria-required="true"
+                            aria-describedby="char-count"
+                        >
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                            aria-label="Add new task"
+                        >
+                            <span class="btn-icon" aria-hidden="true">+</span>
+                            <span>Add Task</span>
+                        </button>
+                    </div>
+                    <div id="char-count" class="char-count" aria-live="polite">0/100 characters</div>
+                </div>
+
+                <div class="filter-group" role="group" aria-label="Filter tasks">
+                    <span class="filter-label">Filter by:</span>
+                    <div class="filter-buttons">
+                        <button
+                            type="button"
+                            id="filter-all"
+                            class="filter-btn filter-btn-active"
+                            data-filter="all"
+                            aria-pressed="true"
+                            aria-label="Show all tasks"
+                        >
+                            All Tasks
+                        </button>
+                        <button
+                            type="button"
+                            id="filter-active"
+                            class="filter-btn"
+                            data-filter="active"
+                            aria-pressed="false"
+                            aria-label="Show only active tasks"
+                        >
+                            Pending
+                        </button>
+                        <button
+                            type="button"
+                            id="filter-completed"
+                            class="filter-btn"
+                            data-filter="completed"
+                            aria-pressed="false"
+                            aria-label="Show only completed tasks"
+                        >
+                            Completed
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="task-stats" aria-live="polite" aria-atomic="true">
+                <p><span class="stat-label">Total:</span> <span id="total-count">0</span></p>
+                <p><span class="stat-label">Active:</span> <span id="active-count">0</span></p>
+                <p><span class="stat-label">Completed:</span> <span id="completed-count">0</span></p>
+            </div>
+
+            <div id="task-list-container" class="task-list-wrapper">
+                <ul id="task-list" class="task-list" role="list" aria-label="List of tasks">
+                    <!-- Tasks will be dynamically added here -->
+                </ul>
+                <div id="empty-state" class="empty-state" role="status" aria-live="polite">
+                    <p class="empty-message">No tasks yet. Add one to get started!</p>
+                </div>
+            </div>
+
+            <div class="action-bar">
+                <button
+                    id="clear-completed-btn"
+                    class="btn btn-secondary"
+                    aria-label="Remove all completed tasks"
+                    disabled
+                >
+                    Clear Completed
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <footer role="contentinfo" class="footer">
+        <p>&copy; 2026 Task Manager. Built with care for productivity.</p>
+    </footer>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
