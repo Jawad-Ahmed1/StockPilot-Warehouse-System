@@ -2,10 +2,10 @@ import pool from '../config/database.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-// ─── Email via Brevo HTTP API (works on Railway) ──────────────────────────────
+// ─── Email via Brevo API (HTTP — no IP restriction, works on Railway) ─────────
 
 const sendEmail = async ({ to, subject, html }) => {
-  const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+  const res = await fetch('https://api.brevo.com/v3/smtp/email', {
     method: 'POST',
     headers: {
       'Accept':       'application/json',
@@ -13,15 +13,15 @@ const sendEmail = async ({ to, subject, html }) => {
       'api-key':      process.env.BREVO_API_KEY,
     },
     body: JSON.stringify({
-      sender:   { name: 'Stock Pilot', email: process.env.EMAIL_USER },
-      to:       [{ email: to }],
+      sender:      { name: 'Stock Pilot', email: process.env.EMAIL_USER },
+      to:          [{ email: to }],
       subject,
       htmlContent: html,
     }),
   });
-  if (!response.ok) {
-    const err = await response.json();
-    throw new Error(err.message || 'Email send failed');
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.message || `Brevo error ${res.status}`);
   }
 };
 
